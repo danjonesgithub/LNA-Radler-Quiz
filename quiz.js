@@ -2,114 +2,169 @@
 // Data
 //--------------------
 
-var lnaQuestions = [
-  {ind: 0, txt: 'this is question 1', img: 'img1.jpg', lnaOptions:[
+var Questions = [
+  {ind: 0, txt: 'this is question 1', img: 'img1.jpg', Options:[
     {ind: 0, txt: 'option 1-1', res: true},
     {ind: 1, txt: 'option 1-2', res: false},
     {ind: 2, txt: 'option 1-3', res: false}
   ]},
-  {ind: 0, txt: 'this is question 2', img: 'img2.jpg', lnaOptions:[
+  {ind: 0, txt: 'this is question 2', img: 'img2.jpg', Options:[
     {ind: 0, txt: 'option 2-1', res: false},
     {ind: 1, txt: 'option 2-2', res: true},
     {ind: 2, txt: 'option 2-3', res: false}
   ]},
-  {ind: 0, txt: 'this is question 3', img: 'img3.jpg', lnaOptions:[
+  {ind: 0, txt: 'this is question 3', img: 'img3.jpg', Options:[
     {ind: 0, txt: 'option 3-1', res: false},
     {ind: 1, txt: 'option 3-2', res: false},
     {ind: 2, txt: 'option 3-3', res: true}
   ]}
 ];
 
-
-//--------------------
-// Global Variables
-//--------------------
-
-var currentQuestion;
-
-
 //--------------------
 // Object Constructors
 //--------------------
+function Quiz(){
+  this.qNo = 0;
+  this.score = 0;
+  this.Questions = [];
 
-function lnaQuestion(_ind){
-  this.ind = _ind;
-  this.txt = lnaQuestions[this.ind].txt;
-  this.img = lnaQuestions[this.ind].img;
-  this.lnaOptions = [];
-  for(i=0; i<lnaQuestions[this.ind].lnaOptions.length; i++){
-    this.lnaOptions.push(new lnaOption(this.ind,i));
+  for(j=0; j<Questions.length; j++){
+    this.Questions.push(new Question(j));
   }
-}
 
-lnaQuestion.prototype.drawOptions = function(){
-  for(i=0; i<this.lnaOptions.length; i++){
-    this.lnaOptions[i].drawOption();
-  }
-}
+  this.qTot = this.Questions.length;
 
-lnaQuestion.prototype.showAnswers = function(){
-  for(i=0; i<this.lnaOptions.length; i++){
-    if(this.lnaOptions[i].res == true){
-      this.lnaOptions[i].makeTrue();
+  this.nextQuestion = function(){
+    this.clearOptions();
+    if (!this.Questions[this.qNo].lastQuestion){
+      this.qNo++;
+      this.drawQuestion();
+      this.updateProgressBar();
     } else {
-      this.lnaOptions[i].makeFalse();
+      this.showScoreboard();
+    }
+  }
+
+  this.drawQuestion = function(){
+    $('#question').html(this.Questions[this.qNo].txt);
+    this.Questions[this.qNo].drawOptions();
+    $('#nextButton').addClass('disabled').off('click',nextQuestion);
+  }
+
+  this.updateProgressBar = function(){
+    $('progress').attr({'value':this.qNo + 1,'max':this.qTot});
+    $('#qNo').html(this.qNo + 1);
+    $('#qTot').html(this.qTot);
+  }
+
+  this.start = function(){
+    this.drawQuestion();
+    this.updateProgressBar();
+  }
+
+  this.showScoreboard = function(){
+    this.clearOptions();
+    for (i=0; i<this.Questions.length; i++){
+      console.log('Question ' + i + ': ' + this.Questions[i].correct)
+      if (this.Questions[i].correct){
+        this.score++;
+      }
+    }
+    console.log('your score was: ' + this.score);
+  }
+
+  this.clearOptions = function(){
+    $('#optionHolder').html('');
+  }
+}
+
+function Question(_ind){
+  this.ind = _ind;
+  this.txt = Questions[this.ind].txt;
+  this.img = Questions[this.ind].img;
+  this.correct = false;
+  this.lastQuestion = false;
+  this.Options = [];
+
+  for(i=0; i<Questions[this.ind].Options.length; i++){
+    this.Options.push(new Option(this.ind,i));
+  }
+
+  if (this.ind == Questions.length-1){
+    this.lastQuestion = true;
+  }
+}
+
+Question.prototype.drawOptions = function(){
+  for(i=0; i<this.Options.length; i++){
+    this.Options[i].drawOption();
+  }
+  if(this.lastQuestion){
+    $('#nextButton').html('Show Scores');
+  }
+}
+
+Question.prototype.showAnswers = function(){
+  for(i=0; i<this.Options.length; i++){
+    if(this.Options[i].res == true){
+      this.Options[i].makeTrue();
+    } else {
+      this.Options[i].makeFalse();
     }
   }
 }
 
-function lnaOption(_qu,_ind){
-  this.qu = _qu;
+function Option(_q,_ind){
+  this.q = _q;
   this.ind = _ind;
-  this.txt = lnaQuestions[this.qu].lnaOptions[this.ind].txt;
-  this.res = lnaQuestions[this.qu].lnaOptions[this.ind].res;
+  this.txt = Questions[this.q].Options[this.ind].txt;
+  this.res = Questions[this.q].Options[this.ind].res;
 }
 
-lnaOption.prototype.drawOption = function(){
+Option.prototype.drawOption = function(){
   var btn = document.createElement('Button');
   $('#optionHolder').append(btn);
   $(btn).attr('id','option' + this.ind);
   $(btn).html(this.txt);
   $(btn).on('click',function(){
-    currentQuestion.lnaOptions[this.id.replace('option','')].clickOption();
+    quiz.Questions[quiz.qNo].Options[this.id.replace('option','')].clickOption();
   });
 }
 
-lnaOption.prototype.makeTrue = function(){
+Option.prototype.makeTrue = function(){
     $('button#option' + this.ind).addClass('true');
 }
 
-lnaOption.prototype.makeFalse = function(){
+Option.prototype.makeFalse = function(){
     $('button#option' + this.ind).addClass('false');
 }
 
-lnaOption.prototype.makeSelected = function(){
+Option.prototype.makeSelected = function(){
     $('button#option' + this.ind).addClass('selected');
     $('#optionHolder button').off();
 }
 
-lnaOption.prototype.clickOption = function(){
+Option.prototype.clickOption = function(){
     this.makeSelected();
-    currentQuestion.showAnswers()
+    quiz.Questions[this.q].showAnswers()
 
     if(this.res == true){
-      console.log('Congratulations!');
-    } else {
-      console.log('Wrong Answer!');
+      quiz.Questions[this.q].correct = true;
     }
 
     $('#nextButton').removeClass('disabled').on('click',nextQuestion);
 }
 
 function nextQuestion(){
-  console.log('Next!!');
+  quiz.nextQuestion();
 }
 
 //--------------------
 // Initialisation Functions
 //--------------------
 
+var quiz = new Quiz();
+
 $(document).ready(function(){
-  currentQuestion = new lnaQuestion(0);
-  currentQuestion.drawOptions();
+  quiz.start();
 });
