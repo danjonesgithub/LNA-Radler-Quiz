@@ -82,12 +82,12 @@ body {
   text-align: center;
 }
 
-header {
+#header {
   background-image: url(image/header-back.png);
   padding: 20px;
 }
 
-header progress {
+#header progress {
   display: block;
   width: 70%;
   margin: 0px auto;
@@ -98,7 +98,7 @@ header progress {
   border: 1px solid #333;
 }
 
-header #progressText {
+#header #progressText {
   color: white;
   font-size: 14px;
   margin-top: 10px;
@@ -106,11 +106,12 @@ header #progressText {
 
 #question, #optionHolder, #picHolder, #nextButtonHolder {
   width: 60%;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
 
-#question {
+#question, #scQuestion {
   margin-top: 30px;
   margin-bottom: 30px;
   font-size: 18px;
@@ -119,12 +120,15 @@ header #progressText {
 
 #optionHolder {
   margin-bottom: 30px;
+  min-height: 60px;
 }
 
 #picHolder {
-  background-color: #ddd;
-  height: 130px;
   margin-bottom: 40px;
+}
+
+#picHolder img {
+  width: 80%;
 }
 
 button {
@@ -139,8 +143,6 @@ button {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  transition-property: background-color;
-  transition-duration: 0.2s;
 }
 
 button:hover {
@@ -149,47 +151,155 @@ button:hover {
   transition-duration: 0.2s;
 }
 
-button.true {
-  background-color: green;
-  cursor: default;
+#optionHolder button {
+  visibility: hidden;
 }
 
-button.false {
-  background-color: red;
-  cursor: default;
+#optionHolder button.hide {
+  display: none;
+}
+
+html body button.true {
+  background-color: #51a025 !important;
 }
 
 button.selected {
-  transition-property: box-shadow;
-  transition-duration: 0.2s;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+  background-color: #ff2b00 !important;
 }
 
-button#nextButton {
+button.selected {
+  background-color: #ff2b00;
+}
+
+button#nextButton, button#startButton, button#playAgain {
   height: 40px;
   font-size: 12px;
   border-bottom: 3px solid #a9634d;
+  width: auto;
+  margin-top: 20px;
+  padding: 0px 60px;
+}
+
+button#playAgain {
+  padding: 0px 20px 0px 45px;
+  background-image: url(image/play-again.png);
+  background-repeat: no-repeat;
+  background-position: 15px center;
+}
+
+button.disabled, button.inactive {
+  cursor: default;
+}
+
+button.disabled:hover, button.inactive:hover  {
+  background-color: #ca816a;
 }
 
 button.disabled {
-  cursor: default;
   opacity: 0.5;
 }
 
-button.disabled:hover {
-  background-color: #ca816a;
+/* Start Page */
+#quizLogoHolder {
+  background-image: url(image/main-back.png);
+  padding: 50px 0px 40px 0px;
+}
+
+#quizLogoHolder img {
+  width: 50%;
+  max-width: 421px;
+}
+
+#quizLogoHolder p {
+  margin-top: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ScoreCard Page */
+#scHeader {
+  background-image: url(image/header-back.png);
+  padding: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+#scHeader img {
+  margin-right: 28px;
+}
+
+#scResults {
+  padding-top: 30px;
+  width: 60%;
+  margin: 0px auto;
+}
+
+#scResults p {
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 1.1em;
+  margin-bottom: 40px;
+}
+
+#scResults #scScore {
+  color: #51a025;
+}
+
+#scResultHolder {
+  margin-bottom: 40px;
+}
+
+#scResultHolder span {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 100%;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+}
+
+#scResultHolder span.correct {
+  background-color: #51a025;
+  border-bottom: 3px solid #205527;
+
+}
+
+#scResultHolder span.correct:hover {
+  background-color: #71be43;
+}
+
+#scResultHolder span.incorrect {
+  background-color: #ff2b00;
+  border-bottom: 3px solid #bd0000;
+}
+
+#scResultHolder span.incorrect:hover {
+  background-color: #ff765a;
+}
+
+/* Starting Scenario */
+#quiz, #scoreCard {
+  display: none;
 }
 
 @media all and (max-width: 992px) {
 
-  #question, #optionHolder, #picHolder, #nextButtonHolder {
+  #question, #optionHolder, #picHolder, #nextButtonHolder, #scResults {
     width: 90%;
   }
 }
 
 @media all and (max-width: 767px) {
 
-  #question, #optionHolder, #picHolder, #nextButtonHolder {
+  #question, #optionHolder, #picHolder, #nextButtonHolder, #scResults {
     width: auto;
     margin-left: 20px;
     margin-right: 20px;
@@ -199,4 +309,108 @@ button.disabled:hover {
     width: 100%;
     margin: 0px 0px 5px 0px;
   }
+}
+
+/* Animate.css */
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  visibility: visible !important;
+}
+
+.animated.hinge {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+}
+
+@keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(.9, .9, .9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(.97, .97, .97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.bounceIn {
+  animation-name: bounceIn;
+}
+
+@keyframes bounceOutDown {
+  20% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+
+.bounceOutDown {
+  animation-name: bounceOutDown;
+}
+
+@keyframes zoomOutDown {
+  40% {
+    opacity: 1;
+    transform: scale3d(.475, .475, .475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale3d(.1, .1, .1) translate3d(0, 2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+  }
+}
+
+.zoomOutDown {
+  animation-name: zoomOutDown;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
 }

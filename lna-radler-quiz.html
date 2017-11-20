@@ -14,20 +14,45 @@
     <script src="quiz.js"></script>
   </head>
   <body>
-    <header>
-      <progress value="1" max="14"></progress>
-      <div id="progressText">Question <span id="qNo">1</span> / <span id="qTot">14</span></div>
-    </header>
     <main>
-      <section>
-        <div id="question">Here is my question...</div>
+
+      <section id="intro">
+        <div id="quizLogoHolder">
+          <img src="image/start-logo.png" />
+          <p>Who is the Radler master of masters?</p>
+        </div>
+        <button id="startButton">Play</button>
+      </section>
+
+      <section id='quiz'>
+        <div id="header">
+          <progress value="1" max="14"></progress>
+          <div id="progressText">Question <span id="qNo">1</span> / <span id="qTot">14</span></div>
+        </div>
+        <div id="question"></div>
         <div id="optionHolder">
         </div>
-        <div id="picHolder"></div>
+        <div id="picHolder">
+          <img class="animated" src=""/>
+        </div>
         <div id="nextButtonHolder">
           <button id="nextButton" class="disabled">Next Question</button>
         </div>
       </section>
+
+      <section id="scoreCard">
+        <div id="scHeader">
+          <img src="image/complete-star.png" />Quiz Completed
+        </div>
+        <div id="scResults">
+          <p>You completed the quiz and your score is <span id="scScore"></span><br/>Press any questions below to review how you performed</p>
+          <div id="scResultHolder"></div>
+          <div id="scQuestion"></div>
+          <div id="scOptionHolder"></div>
+          <button id="playAgain">Play Again</button>
+        </div>
+      </section>
+
     </main>
   </body>
 </html>
