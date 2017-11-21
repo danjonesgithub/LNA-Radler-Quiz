@@ -1,3 +1,428 @@
+<style>
+
+/* Global */
+#quizSection {
+  width: 100%;
+  background-color: #eee;
+  line-height: 1.1em;
+  font-size: 16px;
+  color: #333;
+  font-family: heineken-regular, arial, sans-serif;
+  text-align: center;
+}
+
+#header {
+  background-image: url(image/header-back.png);
+  padding: 20px;
+}
+
+#header progress {
+  display: block;
+  width: 70%;
+  margin: 0px auto;
+  border-radius: 4px;
+  height: 8px;
+  background-color: white;
+  color: #55a22a;
+  border: 1px solid #333;
+}
+
+#header #progressText {
+  color: white;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+#question, #optionHolder, #picHolder, #nextButtonHolder {
+  width: 60%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#question, #scQuestion {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#optionHolder {
+  margin-bottom: 30px;
+  min-height: 60px;
+}
+
+#picHolder {
+  margin-bottom: 40px;
+}
+
+#picHolder img {
+  width: 80%;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ca816a;
+  width: 30%;
+  margin-right: 2%;
+  height: 60px;
+  border-radius: 7px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #eba087;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+}
+
+#optionHolder .button {
+  visibility: hidden;
+}
+
+#optionHolder .button.hide {
+  display: none;
+}
+
+html body .button.true {
+  background-color: #51a025 !important;
+}
+
+.button.selected {
+  background-color: #ff2b00 !important;
+}
+
+.button.selected {
+  background-color: #ff2b00;
+}
+
+.button#nextButton, .button#startButton, .button#playAgain {
+  height: 40px;
+  font-size: 12px;
+  border-bottom: 3px solid #a9634d;
+  width: auto;
+  margin-top: 20px;
+  padding: 0px 60px;
+}
+
+.button#playAgain {
+  padding: 0px 20px 0px 45px;
+  background-image: url(image/play-again.png);
+  background-repeat: no-repeat;
+  background-position: 15px center;
+}
+
+.button.disabled, #button.inactive {
+  cursor: default;
+}
+
+.button.disabled:hover, button.inactive:hover  {
+  background-color: #ca816a;
+}
+
+.button.disabled {
+  opacity: 0.5;
+}
+
+/* Start Page */
+#quizLogoHolder {
+  background-image: url(image/main-back.png);
+  padding: 50px 0px 40px 0px;
+}
+
+#quizLogoHolder img {
+  width: 50%;
+  max-width: 421px;
+}
+
+#quizLogoHolder p {
+  margin-top: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ScoreCard Page */
+#scHeader {
+  background-image: url(image/header-back.png);
+  padding: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+#scHeader img {
+  margin-right: 28px;
+}
+
+#scResults {
+  padding-top: 30px;
+  width: 60%;
+  margin: 0px auto;
+}
+
+#scResults p {
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 1.1em;
+  margin-bottom: 40px;
+}
+
+#scResults #scScore {
+  color: #51a025;
+}
+
+#scResultHolder {
+  margin-bottom: 40px;
+}
+
+#scResultHolder span {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 100%;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+}
+
+#scResultHolder span.correct {
+  background-color: #51a025;
+  border-bottom: 3px solid #205527;
+
+}
+
+#scResultHolder span.correct:hover {
+  background-color: #71be43;
+}
+
+#scResultHolder span.incorrect {
+  background-color: #ff2b00;
+  border-bottom: 3px solid #bd0000;
+}
+
+#scResultHolder span.incorrect:hover {
+  background-color: #ff765a;
+}
+
+/* Starting Scenario */
+#quiz, #scoreCard {
+  display: none;
+}
+
+@media all and (max-width: 1200px) {
+
+  #question, #optionHolder, #picHolder, #nextButtonHolder, #scResults {
+    width: 90%;
+  }
+}
+
+@media all and (max-width: 767px) {
+
+  #question, #optionHolder, #picHolder, #nextButtonHolder, #scResults {
+    width: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .button {
+    width: 100%;
+    margin: 0px 0px 5px 0px;
+  }
+}
+
+/* Animate.css */
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  visibility: visible !important;
+}
+
+.animated.hinge {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+}
+
+@keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(.9, .9, .9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(.97, .97, .97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.bounceIn {
+  animation-name: bounceIn;
+}
+
+@keyframes bounceOutDown {
+  20% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+
+.bounceOutDown {
+  animation-name: bounceOutDown;
+}
+
+@keyframes zoomOutDown {
+  40% {
+    opacity: 1;
+    transform: scale3d(.475, .475, .475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale3d(.1, .1, .1) translate3d(0, 2000px, 0);
+    transform-origin: center bottom;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+  }
+}
+
+.zoomOutDown {
+  animation-name: zoomOutDown;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+</style>
+
+
+<div id="quizSection">
+  <section id="intro">
+    <div id="quizLogoHolder">
+      <div class="RSBContainer">
+        <div class="content-padding">
+        </div>
+        <div class="RSBCol">
+          <img src="image/start-logo.png" />
+          <p>Who is the Radler master of masters?</p>
+        </div>
+      </div>
+    </div>
+    <div class="RSBContainer">
+      <div class="content-padding">
+      </div>
+      <div class="RSBCol">
+        <span id="startButton" class="button">Play</span>
+      </div>
+    </div>
+  </section>
+
+  <section id='quiz'>
+    <div id="header">
+      <div class="RSBContainer">
+        <div class="content-padding">
+        </div>
+        <div class="RSBCol">
+          <progress value="1" max="14"></progress>
+          <div id="progressText">Question <span id="qNo">1</span> / <span id="qTot">14</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="RSBContainer">
+      <div class="content-padding">
+      </div>
+      <div class="RSBCol">
+        <div id="question"></div>
+        <div id="optionHolder">
+        </div>
+        <div id="picHolder">
+          <img class="animated" src=""/>
+        </div>
+        <div id="nextButtonHolder">
+          <span id="nextButton" class="button disabled">Next Question</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="scoreCard">
+    <div id="scHeader">
+      <div class="RSBContainer">
+        <div class="content-padding">
+        </div>
+        <div class="RSBCol">
+          <img src="image/complete-star.png" />Quiz Completed
+        </div>
+      </div>
+    </div>
+    <div id="scResults">
+      <div class="RSBContainer">
+        <div class="content-padding">
+        </div>
+        <div class="RSBCol">
+          <p>You completed the quiz and your score is <span id="scScore"></span><br/>Press any questions below to review how you performed</p>
+          <div id="scResultHolder"></div>
+          <div id="scQuestion"></div>
+          <div id="scOptionHolder"></div>
+          <span id="playAgain" class="button">Play Again</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
 //--------------------
 // Data
 //--------------------
@@ -98,7 +523,7 @@ function Question(_ind){
 }
 
 Question.prototype.drawOptions = function(el,del){
-  $('#optionHolder button').addClass('old');
+  $('#optionHolder .button').addClass('old');
   for(i=0; i<this.Options.length; i++){
     this.Options[i].drawOption(el,del);
   }
@@ -141,9 +566,9 @@ Question.prototype.imgIn = function(){
 Question.prototype.showAnswer = function(){
   for(i=0; i<this.Options.length; i++){
     if(this.Options[i].res == true){
-      $('button#option' + i).addClass('true');
+      $('.button#option' + i).addClass('true');
     }
-    $('button#option' + i).addClass('inactive');
+    $('.button#option' + i).addClass('inactive');
   }
 }
 
@@ -171,8 +596,8 @@ Question.prototype.scShowQuestion = function(){
   $('#scOptionHolder').html('');
   this.drawOptions('scOptionHolder',0);
   this.showAnswer()
-  $('#scOptionHolder button').off();
-  $('button#option' + this.myAnswer).addClass('selected');
+  $('#scOptionHolder .button').off();
+  $('.button#option' + this.myAnswer).addClass('selected');
   $('#scQuestion').html(this.txt);
 }
 
@@ -191,28 +616,28 @@ function Option(_q,_ind){
 
 Option.prototype.drawOption = function(el,d){
   d = typeof d == 'undefined' ? del : d;
-  var _btn = document.createElement('Button');
+  var _btn = document.createElement('span');
   $('#' + el).append(_btn);
 
   $(_btn)
     .attr('id','option' + this.ind)
     .html(this.txt)
-    .addClass('hide')
+    .addClass('hide button')
     .data({'q':this.q,'ind':this.ind})
     .on('click', function(){
         quiz.Questions[$(this).data('q')].Options[$(this).data('ind')].selectOption();
     })
     .delay((quiz.Questions[this.q].Options.length * d * 6) + this.ind * d)
     .queue( function(next){
-      $('#optionHolder button.old').remove();
-      $('#optionHolder button').removeClass('hide');
+      $('#optionHolder .button.old').remove();
+      $('#optionHolder .button').removeClass('hide');
       $(this).addClass('bounceIn animated');
       next();
     });
 }
 
 Option.prototype.clearOption = function(){
-  $('button#option' + this.ind)
+  $('.button#option' + this.ind)
     .delay(this.ind * del * 3)
     .queue( function(next){
       $(this)
@@ -231,7 +656,7 @@ Option.prototype.selectOption = function(){
 
   quiz.Questions[this.q].showAnswer();
 
-  $('button#option' + this.ind).addClass('selected');
+  $('.button#option' + this.ind).addClass('selected');
   $('#nextButton').removeClass('disabled').on('click', nextQuestion);
 }
 
@@ -315,7 +740,6 @@ var quiz = {
                       }
 }
 
-
 //--------------------
 // Initialisation Functions
 //--------------------
@@ -332,3 +756,10 @@ $(document).ready(function(){
     quiz.start();
   });
 });
+
+//--------------------
+// Interrupt Standard Layout Functions
+//--------------------
+$(document).off('ready',createStandardLayout);
+$('head').append('<style>html body .jsWebbox {visibility:visible;}</style>');
+</script>
