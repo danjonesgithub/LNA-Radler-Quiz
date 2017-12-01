@@ -64,8 +64,8 @@ table {
 @font-face
 {
     font-family: 'heineken-regular';
-    src: url("font/hesanbol.eot");
-    src: url("font/hesanbol.eot?#iefix") format("embedded-opentype"), url("font/hesanbol.woff") format("woff"), url("font/hesanbol.ttf") format("truetype"), url("font/hesanbol.svg#heineken_corebold") format("svg");
+    src: url("font/Hesanbol.eot");
+    src: url("font/Hesanbol.eot?#iefix") format("embedded-opentype"), url("font/Hesanbol.woff") format("woff"), url("font/Hesanbol.ttf") format("truetype"), url("font/Hesanbol.svg#heineken_corebold") format("svg");
     font-weight: bold;
     font-style: normal;
 }
