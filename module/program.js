@@ -1,9 +1,6 @@
-// get question data
-import {QuestionData} from './data.js';
-
-// get object classes
-import {Question} from './question.js';
-import {Option} from './option.js';
+import {QuestionData} from '/module/data.js';
+import {Question} from '/module/class_question.js';
+import {Option} from '/module/class_option.js';
 
 //--------------------
 // Main Quiz Object
@@ -18,7 +15,6 @@ export let quiz = {
                         this.qNo = 0;
                         this.Questions = [];
                         for(let j=0; j<QuestionData.length; j++){
-                          //this.Questions.push(new Question(j));
                           this.Questions = [...this.Questions, new Question(j)];
                         }
                         this.qTot = this.Questions.length;
@@ -26,7 +22,8 @@ export let quiz = {
                       },
 
   start             : function(){
-                        this.init();
+                        this
+                          .init();
 
                         $('#intro, #scoreCard').hide();
                         $('#quiz').show();
@@ -37,17 +34,6 @@ export let quiz = {
                           .updateProgressBar();
 
                         _del = 75;
-                        return this;
-                      },
-
-  drawQuestion      : function(){
-                        this.Questions[this.qNo]
-                          .drawOptions('optionHolder')
-                          .imgIn();
-
-                        $('#nextButton')
-                          .addClass('disabled')
-                          .off('click', nextQuestion);
                         return this;
                       },
 
@@ -63,6 +49,18 @@ export let quiz = {
                         } else {
                           this.finish();
                         }
+                        return this;
+                      },
+
+
+  drawQuestion      : function(){
+                        this.Questions[this.qNo]
+                          .drawOptions('optionHolder')
+                          .imgIn();
+
+                        $('#nextButton')
+                          .addClass('disabled')
+                          .off('click', nextQuestion);
                         return this;
                       },
 

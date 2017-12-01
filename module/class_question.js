@@ -1,6 +1,6 @@
-import {QuestionData} from './data.js';
-import {Option} from './option.js';
-import {_del as del, quiz} from './quiz.js';
+import {QuestionData} from '/module/data.js';
+import {Option} from '/module/class_option.js';
+import {_del as del, quiz} from '/module/program.js';
 
 //--------------------
 // Question Class
@@ -17,7 +17,6 @@ export class Question {
     this.Options = [];
 
     for(let i=0; i<QuestionData[_ind].Options.length; i++){
-      //this.Options.push(new Option(_ind,i));
       this.Options = [...this.Options, new Option(_ind,i)];
     }
 
@@ -28,7 +27,7 @@ export class Question {
 
   drawOptions(el,del) {
     $('#optionHolder button').addClass('old');
-    for (const option of this.Options){
+    for (let option of this.Options){
       option.drawOption(el,del);
     }
     if(this.lastQuestion){
@@ -45,29 +44,23 @@ export class Question {
   }
 
   imgOut() {
-    $('#picHolder img')
-      .delay((this.Options.length * del * 3))
-      .queue( function(next){
-        $(this)
-          .removeClass('fadeIn')
-          .addClass('zoomOutDown');
-        next();
-      });
-      return this;
+    setTimeout(function(){ //wait for clearOptions to finish
+      $('#picHolder img')
+        .removeClass('fadeIn')
+        .addClass('zoomOutDown');
+    }, this.Options.length * del * 3);
+    return this;
   }
 
   imgIn() {
-    $('#picHolder img')
-      .delay(this.Options.length * del * 4)
-      .queue( function(next){
-        $(this)
-          .attr('src', 'image/' + quiz.Questions[quiz.qNo].img)
-          .removeClass('zoomOutDown')
-          .addClass('fadeIn');
-        $('#question').html(quiz.Questions[quiz.qNo].txt);
-        next();
-      });
-      return this;
+    var _img = document.createElement('img');
+    $(_img).attr('src', '/image/' + quiz.Questions[quiz.qNo].img)  //preload image src
+    setTimeout(function(){ //wait for imgOut to finish
+      $('#picHolder').html('').append(_img);
+      $('#picHolder img').addClass('fadeIn animated');
+      $('#question').html(quiz.Questions[quiz.qNo].txt);
+    }, (this.Options.length * del * 3) + 1000);
+    return this;
   }
 
   showAnswer() {
