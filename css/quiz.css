@@ -121,6 +121,7 @@ body {
 #optionHolder {
   margin-bottom: 30px;
   min-height: 60px;
+  text-align: left;
 }
 
 #picHolder {

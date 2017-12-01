@@ -16,7 +16,7 @@ export class Option {
   drawOption(el,d = del) {
     let _this = this;
 
-    setTimeout(function(){
+    setTimeout(function(){ //let old elements exit before drawing new elements
       let _btn = document.createElement('button');
       $('#' + el).append(_btn);
 
@@ -35,6 +35,7 @@ export class Option {
       $('#optionHolder button.old').remove();
       $('#optionHolder button').removeClass('hide');
       $(_btn).addClass('bounceIn animated');
+      
     },(quiz.Questions[_this.q].Options.length * d * 3) + (1000/del) * d + (_this.ind * d));
 
     return this;
