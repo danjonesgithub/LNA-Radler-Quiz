@@ -13,30 +13,27 @@ export class Option {
     this.res = QuestionData[_q].Options[_ind].res;
   }
 
-  drawOption(el,d = del) {
-    let _this = this;
+  drawOption(el, d = del) {
+    let _btn = document.createElement('button');
+    $('#' + el).append(_btn);
+
+    $(_btn)
+      .attr('id','option' + this.ind)
+      .html(this.txt)
+      .addClass('hide')
+      .data({
+          'q'   :this.q,
+          'ind' :this.ind
+      })
+      .on('click', function(){
+          quiz.Questions[$(this).data('q')].Options[$(this).data('ind')].selectOption();
+      });
 
     setTimeout(function(){ //let old elements exit before drawing new elements
-      let _btn = document.createElement('button');
-      $('#' + el).append(_btn);
-
-      $(_btn)
-        .attr('id','option' + _this.ind)
-        .html(_this.txt)
-        .addClass('hide')
-        .data({
-            'q'   :_this.q,
-            'ind' :_this.ind
-        })
-        .on('click', function(){
-            quiz.Questions[$(this).data('q')].Options[$(this).data('ind')].selectOption();
-        });
-
       $('#optionHolder button.old').remove();
       $('#optionHolder button').removeClass('hide');
       $(_btn).addClass('bounceIn animated');
-      
-    },(quiz.Questions[_this.q].Options.length * d * 3) + (1000/del) * d + (_this.ind * d));
+    },(quiz.Questions[this.q].Options.length * d * 3) + (1000/del) * d + (this.ind * d));
 
     return this;
   }
@@ -46,6 +43,7 @@ export class Option {
 
     setTimeout(function(){
       $('button#option' + _this.ind)
+        .not('.hide')
         .removeClass('bounceIn')
         .addClass('bounceOutDown');
     },_this.ind * del * 3);
