@@ -29,11 +29,9 @@ export class Option {
           quiz.Questions[$(this).data('q')].Options[$(this).data('ind')].selectOption();
       });
 
-    setTimeout(function(){ //let old elements exit before drawing new elements
-      $('#optionHolder button.old').remove();
-      $('#optionHolder button').removeClass('hide');
-      $(_btn).addClass('bounceIn animated');
-    },(quiz.Questions[this.q].Options.length * d * 3) + (1000/del) * d + (this.ind * d));
+    $('#optionHolder button.old').remove();
+    $('#optionHolder button').removeClass('hide');
+    $(_btn).addClass('bounceIn animated');
 
     return this;
   }

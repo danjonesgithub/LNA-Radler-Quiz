@@ -38,14 +38,24 @@ export let quiz = {
                       },
 
   nextQuestion      : function(){
-                        if (!this.Questions[this.qNo].lastQuestion){
-                          this.Questions[this.qNo]
-                            .clearOptions()
-                            .imgOut();
+                        let currQ = this.Questions[this.qNo];
+                        if (!currQ.lastQuestion){
+
+                          currQ.clearOptions();
+
+                          delay( //wait for clearOptions to finish
+                            currQ.imgOut,
+                            currQ.Options.length * del * 3
+                          );
+
                           this.qNo++;
-                          this
-                            .drawQuestion()
-                            .updateProgressBar();
+                          currQ = this.Questions[this.qNo];
+
+                          delay( //wait for imgOut to finish
+                            this.drawQuestion,
+                            (currQ.Options.length * del * 3) + 1000
+                          );
+
                         } else {
                           this.finish();
                         }
@@ -61,6 +71,8 @@ export let quiz = {
                         $('#nextButton')
                           .addClass('disabled')
                           .off('click', nextQuestion);
+
+                        this.updateProgressBar();
                         return this;
                       },
 
@@ -107,6 +119,10 @@ export let quiz = {
 export var _del = 0;
 export var nextQuestion = function(){
   quiz.nextQuestion()
+}
+
+export var delay = function(_callBack,_delay){
+  setTimeout(_callback,_delay);
 }
 
 $(document).ready(function(){
