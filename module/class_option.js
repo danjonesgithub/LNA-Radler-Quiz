@@ -16,41 +16,28 @@ export class Option {
   drawOption(el,d = del) {
     let _this = this;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    $('#optionHolder button.old').remove();
-    $('#optionHolder button').removeClass('hide');
-    $(_btn).addClass('bounceIn animated');
-=======
-    setTimeout(function(){ //let old elements exit before drawing new elements
-      let _btn = document.createElement('button');
-      $('#' + el).append(_btn);
+    let _btn = document.createElement('button');
+    $('#' + el).append(_btn);
 
-      $(_btn)
-        .attr('id','option' + _this.ind)
-        .html(_this.txt)
-        .addClass('hide')
-        .data({
-            'q'   :_this.q,
-            'ind' :_this.ind
-        })
-        .on('click', function(){
-            quiz.Questions[$(this).data('q')].Options[$(this).data('ind')].selectOption();
-        });
+    $(_btn)
+      .attr('id','option' + _this.ind)
+      .html(_this.txt)
+      .addClass('hide')
+      .data({
+          'q'   :_this.q,
+          'ind' :_this.ind
+      })
+      .on('click', function(){
+          quiz.Questions[$(this).data('q')].Options[$(this).data('ind')].selectOption();
+      });
+
+    setTimeout(function(){ //let old elements exit before drawing new elements
 
       $('#optionHolder button.old').remove();
       $('#optionHolder button').removeClass('hide');
       $(_btn).addClass('bounceIn animated');
-      
+
     },(quiz.Questions[_this.q].Options.length * d * 3) + (1000/del) * d + (_this.ind * d));
->>>>>>> parent of 33bb37b... fixed final results showAnswer
-=======
-    setTimeout(function(){ //let old elements exit before drawing new elements
-      $('#optionHolder button.old').remove();
-      $('#optionHolder button').removeClass('hide');
-      $(_btn).addClass('bounceIn animated');
-    },(quiz.Questions[this.q].Options.length * d * 3) + (1000/del) * d + (this.ind * d));
->>>>>>> parent of 59d5723... move setTimeout's
 
     return this;
   }
@@ -60,6 +47,7 @@ export class Option {
 
     setTimeout(function(){
       $('button#option' + _this.ind)
+        .not('.hide')
         .removeClass('bounceIn')
         .addClass('bounceOutDown');
     },_this.ind * del * 3);
