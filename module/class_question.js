@@ -44,9 +44,11 @@ export class Question {
   }
 
   imgOut() {
-    $('#picHolder img')
-      .removeClass('fadeIn')
-      .addClass('zoomOutDown');
+    setTimeout(function(){ //wait for clearOptions to finish
+      $('#picHolder img')
+        .removeClass('fadeIn')
+        .addClass('zoomOutDown');
+    }, this.Options.length * del * 3);
     return this;
   }
 

@@ -17,6 +17,7 @@ export class Option {
     let _this = this;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     $('#optionHolder button.old').remove();
     $('#optionHolder button').removeClass('hide');
     $(_btn).addClass('bounceIn animated');
@@ -43,6 +44,13 @@ export class Option {
       
     },(quiz.Questions[_this.q].Options.length * d * 3) + (1000/del) * d + (_this.ind * d));
 >>>>>>> parent of 33bb37b... fixed final results showAnswer
+=======
+    setTimeout(function(){ //let old elements exit before drawing new elements
+      $('#optionHolder button.old').remove();
+      $('#optionHolder button').removeClass('hide');
+      $(_btn).addClass('bounceIn animated');
+    },(quiz.Questions[this.q].Options.length * d * 3) + (1000/del) * d + (this.ind * d));
+>>>>>>> parent of 59d5723... move setTimeout's
 
     return this;
   }
